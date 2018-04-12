@@ -22,6 +22,7 @@ export class RegisterComponent {
             .subscribe(
                 data => {
                     this.alertService.success('Registration successful', true);
+                    localStorage.setItem('currentUser', JSON.stringify(data['user']));
                     this.router.navigate(['/login']);
                 },
                 error => {
