@@ -13,7 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, UserService } from './_services/index';
+import { AlertService, AuthenticationService, UserService, ChatService } from './_services/index';
 import { AlertComponent } from './_components/alert/alert.component';
 
 
@@ -36,7 +36,8 @@ import { AlertComponent } from './_components/alert/alert.component';
     AuthGuard,
     AlertService,
     AuthenticationService,
-    UserService
+    UserService,
+    ChatService
   ],
   bootstrap: [AppComponent]
 })

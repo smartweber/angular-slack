@@ -51,38 +51,6 @@ app.use((req, res, next) => {
 var routes = require('./routes/router');
 app.use('/api', routes);
 
-// catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   var err = new Error('File Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-// error handler
-// define as the last app.use callback
-// app.use(function (err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.send(err.message);
-// });
-
-// Webpack middleware
-// const webpack = require("webpack");
-// const webpackMiddleware = require("webpack-dev-middleware");
-// const webpackHotMiddleware = require("webpack-hot-middleware");
-// const webpackConfig = require("../webpack.config.js");
-// const compiler = webpack(webpackConfig);
-
-// app.use(webpackMiddleware(compiler, {
-//     hot: true,
-//     publicPath: webpackConfig.output.publicPath,
-//     noInfo: true
-// }));
-// app.use(webpackHotMiddleware(compiler));
-
-// Routes
-// app.get("/*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../static/index.html"));
-// });
 
 var port = 3000;
 // Listen
