@@ -19,11 +19,13 @@ export class LoginComponent implements OnInit {
         private alertService: AlertService) { }
 
     ngOnInit() {
-        // reset login status
-        this.authenticationService.logout();
-
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+        if(localStorage.getItem('currentUser')) { // user localstorage is existed
+            this.router.navigate([this.returnUrl]);
+        }
+        
     }
 
     login() {

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-12">
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -14,17 +14,23 @@
                 <div #scrollMe class="panel-body">
                     <ul class="chat">
                         <li *ngFor="let c of chats">
-                          <div class="left clearfix" *ngIf="c.username===msgData.username; else rightchat">
-                            <span class="chat-img pull-left">
-                              <img src="http://placehold.it/50/55C1E7/fff&text=ME" alt="User Avatar" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">{{ c.username }}</strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>{{ c.updated_at | date: 'medium' }}</small>
+                          <div class="left" *ngIf="c.username===msgData.username; else rightchat">
+                            <span class="chat-img clearfix">
+                              <img src="http://placehold.it/50/55C1E7/fff&text=ME" alt="User Avatar" class="img-circle pull-left" />
+                              <div class="pull-left">
+                                <strong class="primary-font">{{ c.username }}</strong>
+                                <div>
+                                  <small class="text-muted">
+                                    <span class="glyphicon glyphicon-time"></span>{{ c.updated_at | date: 'medium' }}
+                                  </small>
                                 </div>
-                                <p>{{ c.message }}</p>
+                              </div>
+                            </span>
+
+                            <div class="chat-body clearfix">
+                              <p>{{ c.message }}</p>
                             </div>
+                            
                           </div>
                           <ng-template #rightchat>
                             <div class="right clearfix">

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@ang
 import { User } from '../_models/index';
 import { UserService, ChatService } from '../_services/index';
 import * as io from "socket.io-client";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,18 +10,17 @@ import * as io from "socket.io-client";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewChecked {
-  currentUser: any;
-
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   chats: any;
-  joinned: boolean = false;
-  newUser = { username: '', room: '' };
   msgData = { username: '', message: '' };
   socket = io('http://localhost:4000');
 
-  constructor(private chatService: ChatService, private userService: UserService) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  constructor(
+    private chatService: ChatService,
+    private userService: UserService,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -55,15 +55,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  // joinRoom() {
-  //   let date = new Date();
-  //   localStorage.setItem("user", JSON.stringify(this.newUser));
-  //   this.getChatByRoom(this.newUser.room);
-  //   this.msgData = { username: 'jack', message: '' };
-  //   this.joinned = true;
-  //   this.socket.emit('save-message', { username: 'jack', message: 'Join this room', updated_at: date });
-  // }
-
   sendMessage() {
     this.chatService.saveChat(this.msgData).then((result) => {
       this.socket.emit('save-message', result);
@@ -75,9 +66,9 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
   logout() {
     let date = new Date();
     let user = JSON.parse(localStorage.getItem('currentUser'));
-    this.socket.emit('save-message', { username: user.username, message: 'Left this room', updated_at: date });
+    this.socket.emit('save-message', { username: user.username, message: 'Left this chat room', updated_at: date });
     localStorage.removeItem('currentUser');
-    this.joinned = false;
+    this.router.navigate(['/login']);
   }
 
 }

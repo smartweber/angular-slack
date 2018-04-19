@@ -21,42 +21,9 @@ export class ChatService {
     });
   }
 
-  showChat(id) {
-    return new Promise((resolve, reject) => {
-        this.http.get('/chat/' + id)
-          .subscribe(res => {
-            resolve(res)
-        }, (err) => {
-          reject(err);
-        });
-    });
-  }
-
   saveChat(data) {
     return new Promise((resolve, reject) => {
         this.http.post(this.host + '/api/saveChat', data)
-          .subscribe(res => {
-            resolve(res);
-          }, (err) => {
-            reject(err);
-          });
-    });
-  }
-
-  updateChat(id, data) {
-    return new Promise((resolve, reject) => {
-        this.http.put('/chat/'+id, data)
-          .subscribe(res => {
-            resolve(res);
-          }, (err) => {
-            reject(err);
-          });
-    });
-  }
-
-  deleteChat(id) {
-    return new Promise((resolve, reject) => {
-        this.http.delete('/chat/'+id)
           .subscribe(res => {
             resolve(res);
           }, (err) => {
