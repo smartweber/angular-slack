@@ -81,7 +81,12 @@ io.on('connection', function (socket) {
 
 /* GET ALL CHATS */
 router.get('/allChats', function(req, res, next) {
-  Chat.find({}, function (err, chats) {
+  Chat.find({
+    "updated_at": 
+    {
+      $gte: new Date((new Date().getTime() - (7 * 24 * 60 * 60 * 1000)))
+    }
+  }, function (err, chats) {
     if (err) return next(err);
     res.json(chats);
   });
