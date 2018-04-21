@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewChecked {
+  typeingContent: string;
+  isCurrentTypeing: boolean;
+
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   chats: any;
@@ -21,6 +24,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     private userService: UserService,
     private router: Router
   ) {
+    this.isCurrentTypeing = false;
   }
 
   ngOnInit() {
@@ -35,10 +39,30 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
       this.msgData = { username: user.username, message: '' }
       this.scrollToBottom();
     }.bind(this));
+
+    this.socket.on('keydown-event-send', function (data) {
+      this.showTypeingUser(data);
+    }.bind(this));
   }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
+  }
+
+  removeTypingAlert() {
+    if(!this.isCurrentTypeing) {
+      this.typeingContent = '';
+    }
+  }
+
+  showTypeingUser(data: Object) {
+    let user = JSON.parse(localStorage.getItem('currentUser'));
+    if(data['name'] !== user.username) {
+      this.typeingContent = user.username + ' is typing...';
+      this.isCurrentTypeing = true;
+      setTimeout(() => this.isCurrentTypeing = false, 1000);
+      setTimeout(() => this.removeTypingAlert(), 3000);
+    }
   }
 
   scrollToBottom(): void {
@@ -69,6 +93,13 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     this.socket.emit('save-message', { username: user.username, message: 'Left this chat room', updated_at: date });
     localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
+  }
+
+  onKeydown(event: any) {
+    let user = JSON.parse(localStorage.getItem('currentUser'));
+    this.socket.emit('keydown-event-raise', {
+      name: user.username
+    });
   }
 
 }

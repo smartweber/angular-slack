@@ -77,6 +77,11 @@ io.on('connection', function (socket) {
     console.log(data);
     io.emit('new-message', { message: data });
   });
+
+  socket.on('keydown-event-raise', function (data) {
+    console.log(data);
+    io.emit('keydown-event-send', { name: data.name });
+  });
 });
 
 /* GET ALL CHATS */

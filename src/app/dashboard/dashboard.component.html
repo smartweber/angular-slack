@@ -51,9 +51,10 @@
                 </div>
                 <div class="panel-footer">
                   <form (ngSubmit)="sendMessage()" #msgForm="ngForm">
+                    <div [innerHTML]="typeingContent" *ngIf="typeingContent"></div>
                     <div class="input-group">
                         <input type="hidden" [(ngModel)]="msgData.username" name="username" />
-                        <input id="btn-input" type="text" [(ngModel)]="msgData.message" name="message" class="form-control input-sm" placeholder="Type your message here..." required="" />
+                        <input id="btn-input" type="text" [(ngModel)]="msgData.message" name="message" class="form-control input-sm" placeholder="Type your message here..." required="" (keydown)="onKeydown($event)"/>
                         <span class="input-group-btn">
                             <button class="btn btn-warning btn-sm" id="btn-chat" [disabled]="!msgForm.form.valid">
                                 Send</button>
